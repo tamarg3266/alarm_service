@@ -62,8 +62,8 @@ The original end-to-end run exposed native PostgreSQL lock-timeout classificatio
 
 ## Documentation and delivery
 
-- HLD and LLD rendered and visually inspected at 1440px.
-- Both rendered at 390px without horizontal document overflow.
+- The current HLD was recreated from the final source as a self-contained HTML document with embedded styles; the separate low-level document and stylesheet were removed.
+- The recreated HLD was rendered at 1440px and 390px with no horizontal document overflow, visually inspected, and checked for external stylesheet/script dependencies. All local links and section anchors resolve. Backend tests were not repeated for this documentation-only change.
 - Local document links and Maven XML validated.
 - Submission ZIP regenerated with updated source, migrations, tests, operations guide and reusable end-to-end harness.
 

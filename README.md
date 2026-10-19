@@ -113,7 +113,7 @@ The integration suite exercises real Spring MVC validation, Flyway, Hibernate, t
 
 To run the same suite against **a disposable PostgreSQL database**, set `TEST_DB_URL`, `TEST_DB_USER`, and `TEST_DB_PASSWORD`, then run `mvn clean verify`. Tests delete all alarm state and history before each test; never use a database containing wanted data. Use a separately accessible disposable test database; the Compose database is intentionally not published to the host. The test profile replaces PostgreSQL session timeouts with `SELECT 1` to remain portable; production timeout configuration requires a separate deployment smoke check.
 
-H2 does not prove PostgreSQL-specific locking or deployment behavior. Docker Compose must be checked with a running Docker daemon. See `docs/HLD.html` and `docs/LLD.html` for detailed design and operational tradeoffs.
+H2 does not prove PostgreSQL-specific locking or deployment behavior. Docker Compose must be checked with a running Docker daemon. See the self-contained `docs/HLD.html` for the implemented architecture and operational tradeoffs.
 
 ## Limitations and future extensions
 
@@ -123,4 +123,4 @@ For notifications, write an outbox row in the ingestion transaction, then use wo
 
 Substantial implementation and documentation were generated with OpenAI Codex and verified with the automated suite. No external solution source was copied. Official Spring Boot system requirements: https://docs.spring.io/spring-boot/3.5/system-requirements.html.
 
-Detailed [HLD](docs/HLD.html), [LLD](docs/LLD.html), [operations](docs/OPERATIONS.md) and [validation evidence](docs/VALIDATION.md).
+Detailed [HLD](docs/HLD.html), [operations](docs/OPERATIONS.md) and [validation evidence](docs/VALIDATION.md).
