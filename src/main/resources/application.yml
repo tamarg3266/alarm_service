@@ -1,0 +1,50 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/alarms}
+    username: ${DB_USER:alarms}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 3000
+      connection-init-sql: SET lock_timeout = '5s'; SET statement_timeout = '10s'
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+      fail-on-numbers-for-enums: true
+      fail-on-trailing-tokens: true
+      accept-float-as-int: false
+    parser:
+      strict-duplicate-detection: true
+    mapper:
+      allow-coercion-of-scalars: false
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  error:
+    include-message: never
+    include-stacktrace: never
+  tomcat:
+    threads:
+      max: 50
+    max-http-form-post-size: 16KB
+alarm:
+  upload-timeout-ms: 5000
+  max-concurrent-requests: 32
+  requests-per-second: 30
+  request-burst: 120
+  max-client-buckets: 1024
+  max-history-id: ${MAX_HISTORY_ID:10000000}
+  snapshots:
+    ttl-seconds: 120
+    max-count: 32
+    max-records: 10000
+    max-bytes: 4194304
+  retention:
+    days: ${HISTORY_RETENTION_DAYS:30}
+    batch-size: 500
+    interval-ms: 60000
+    archive-directory: ${ARCHIVE_DIRECTORY:./archives}
+    max-archive-bytes: ${MAX_ARCHIVE_BYTES:1073741824}

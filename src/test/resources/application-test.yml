@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: ${TEST_DB_URL:jdbc:h2:mem:alarms;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;LOCK_TIMEOUT=5000}
+    username: ${TEST_DB_USER:sa}
+    password: ${TEST_DB_PASSWORD:}
+    hikari:
+      connection-init-sql: SELECT 1
+alarm:
+  retention:
+    enabled: false
+    archive-directory: .tools/test-archives
+  snapshots:
+    max-count: 100

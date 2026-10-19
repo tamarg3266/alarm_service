@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: alarms
+      POSTGRES_USER: alarms
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in your environment}
+    volumes:
+      - alarm-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alarms -d alarms"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  app:
+    build: .
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/alarms
+      DB_USER: alarms
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in your environment}
+      SERVER_ADDRESS: 0.0.0.0
+      ARCHIVE_DIRECTORY: /archives
+      MAX_HISTORY_ID: ${MAX_HISTORY_ID:-10000000}
+      HISTORY_RETENTION_DAYS: ${HISTORY_RETENTION_DAYS:-30}
+      MAX_ARCHIVE_BYTES: ${MAX_ARCHIVE_BYTES:-1073741824}
+    volumes:
+      - alarm-archives:/archives
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  alarm-data:
+  alarm-archives:
